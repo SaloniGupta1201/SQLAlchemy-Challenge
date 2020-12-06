@@ -90,7 +90,7 @@ Routes
 
 ### Recommended Analysis
 #### Temperature Analysis I
-Hawaii is reputed to enjoy mild weather all year.The average temperature in June at all stations across all available years in the dataset is 74.94411764705882 F. The average temperature in December at all stations across all available years in the dataset is 71.04152933421226 F.
+Hawaii is reputed to enjoy mild weather all year.The average temperature in June at all stations across all available years in the dataset is 75.0 F. The average temperature in December at all stations across all available years in the dataset is 71.0 F.
 
 Histogram versus Scatter plot of June and December temperature data
 
