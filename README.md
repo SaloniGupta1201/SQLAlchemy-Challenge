@@ -1,6 +1,6 @@
 # SQLAlchemy-Challenge - Surfs Up!
 **Submitted By:** Saloni Gupta\
-_Date_: november, 22nd, 2020 
+_Date_: december, 5th, 2020 
 
 ![Surfs_Up image](./Images/surfsup.png)
 
