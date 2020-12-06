@@ -88,13 +88,15 @@ Routes
 
    - When given the start and the end date, calculate the TMIN, TAVG, and TMAX for dates between the start and end date inclusive.
 
-### Recommended Analyses
+### Recommended Analysis
 #### Temperature Analysis I
 Hawaii is reputed to enjoy mild weather all year.The average temperature in June at all stations across all available years in the dataset is 74.94411764705882 F. The average temperature in December at all stations across all available years in the dataset is 71.04152933421226 F.
 
 Histogram versus Scatter plot of June and December temperature data
 
-Using unpaired t-tests to compare the means of two populations (June temperatures in Hawaii and December temperatures in Hawaii), because unpaired t-tests is used to compare the means of two independent populations. However, a paired t-test (one sample t-test) looks at comparing the sample to the population, which we don't want in this case.
+Using unpaired t-tests to compare the means of two populations (June and December temperatures in Hawaii), because unpaired t-tests is used to compare the means of two independent populations. However, a paired t-test (one sample t-test) looks at comparing the sample to the population, which we don't want in this case.
+
+![Temperature_Scatterplot image](./Images/june_dec_scatterplot_histogram.png)
 
 #### Temperature Analysis II
 The calc_temps function used to calculate the min, avg, and max temperatures for the trip using the matching dates from the previous year (i.e.,"2017-01-01" if the trip start date was "2018-01-01").
