@@ -77,12 +77,9 @@ def precipitation():
     filter(Measurement.date >= one_year_ago_date).\
     filter(Measurement.prcp != None).\
     order_by(Measurement.date).all()
-
     #prepare the dictionary with the date as the key and the prcp value as the value
-    precipitation_dict = {}
-    for result in precipitation_data:
-        precipitation_dict[result[0]] = result[1]
-
+    precipitation_dict = dict(precipitation_data)
+    # Return JSON Representation of Dictionary
     return jsonify(precipitation_dict)
 
 @app.route("/api/v1.0/stations")
