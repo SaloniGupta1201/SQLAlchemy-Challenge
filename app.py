@@ -27,7 +27,6 @@ Measurement = Base.classes.measurement
 Station = Base.classes.station
 
 #Create our session (link) from Python to the DB
-#session = Session(engine)
 session = scoped_session(sessionmaker(bind=engine))
 
 # Find the last date
@@ -38,10 +37,11 @@ order_by(Measurement.date).first().date
 one_year_ago = dt.datetime.strptime(latest_date_in_db, '%Y-%m-%d') - dt.timedelta(days=365)
 # Storing the year ago date in YYYY-MM-DD format for further analysis
 one_year_ago_date = one_year_ago.strftime('%Y-%m-%d')
-#Calculate most active station
-most_active_station = session.query(Station.station, func.count(Measurement.station)).filter(Station.station == Measurement.station).\
+# Calculate most active station
+most_active_station = session.query(Station.station, func.count(Measurement.station)).\
+filter(Station.station == Measurement.station).\
 group_by(Station.station).order_by(func.count(Measurement.station).desc()).first()
-#Setup Flask
+# Setup Flask
 app = Flask(__name__)
 
 # Flask Routes
@@ -102,12 +102,15 @@ def temps_last_yr():
     filter(Measurement.date >= one_year_ago_date).\
     filter(Measurement.station == most_active_station[0]).order_by(Measurement.date).all()
     temps_last_yr_dict = dict(temps_last_yr_data)
+    # Return the JSON representation of dictionary.
     return jsonify(temps_last_yr_dict)
 
 @app.route("/api/v1.0/<start>", defaults={'end': None})
 @app.route("/api/v1.0/<start>/<end>")
 def temps_from_date(start,end):
 #"""Return a JSON list of the minimum, average, and maximum temperatures from the start date unitl the end date."""
+    
+    # If we have both a start date and an end date.
     if end != None:
         print("Received start date and end date api request.")
         # Set up for user to enter dates
@@ -122,17 +125,19 @@ def temps_from_date(start,end):
             filter(Measurement.date>=start).filter( Measurement.date<=end).all()
             dict2 = {"Min_Temp": day_temp2[0][0], "Avg_Temp": day_temp2[0][1], "Max_Temp": day_temp2[0][2]}
             return jsonify(dict2)
+    # If we only have a start date.
     else:
         print("Received start date api request.")
-    # Set up for user to enter dates
+        # Set up for user to enter dates
         if start > latest_date_in_db or start < start_date_in_db:
-            return(f"Select date on or after {start_date_in_db} and before {latest_date_in_db}")
+            return(f"Select date on or after {start_date_in_db} or before {latest_date_in_db}")
         else:
             day_temp1 = session.query(func.min(Measurement.tobs),\
             func.round(func.avg(Measurement.tobs)),\
             func.max(Measurement.tobs)).\
             filter(Measurement.date>=start).all()
             dict1 = {"Min_Temp": day_temp1[0][0], "Avg_Temp": day_temp1[0][1], "Max_Temp": day_temp1[0][2]}
+            # Return the JSON representation of dictionary.
             return jsonify(dict1)
     #Code to actually run
 if __name__ == "__main__":
